@@ -1,0 +1,17 @@
+{
+  "name": "sample-node-single-page-site",
+  "version": "1.0.0",
+  "description": "A dependency-free Node.js single page sample website.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "node",
+    "website",
+    "single-page"
+  ],
+  "author": "",
+  "license": "MIT"
+}

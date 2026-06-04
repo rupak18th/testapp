@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BrightDesk Studio</title>
+    <meta
+      name="description"
+      content="A polished single-page sample website served by a small Node.js server."
+    >
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="BrightDesk Studio home">
+        <span class="brand-mark">B</span>
+        <span>BrightDesk</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main id="home">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Sample Node.js website</p>
+          <h1>Build a clean single-page web presence.</h1>
+          <p>
+            BrightDesk is a compact studio sample page with responsive layout,
+            accessible markup, and a Node.js static file server.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">Start a project</a>
+            <a class="button secondary" href="#work">View sample work</a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="Project dashboard preview">
+          <div class="browser-bar">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="preview-grid">
+            <div class="preview-panel large">
+              <span class="panel-label">Traffic</span>
+              <div class="chart-bars" aria-hidden="true">
+                <span style="height: 38%"></span>
+                <span style="height: 58%"></span>
+                <span style="height: 44%"></span>
+                <span style="height: 78%"></span>
+                <span style="height: 62%"></span>
+              </div>
+            </div>
+            <div class="preview-panel">
+              <span class="panel-label">Leads</span>
+              <strong>128</strong>
+            </div>
+            <div class="preview-panel">
+              <span class="panel-label">Launch</span>
+              <strong>12d</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="section">
+        <div class="section-heading">
+          <p class="eyebrow">What is included</p>
+          <h2>Everything needed for a small starter site.</h2>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Responsive HTML</h3>
+            <p>Semantic structure that works across desktop, tablet, and phone screens.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Focused Styling</h3>
+            <p>A calm visual system with balanced spacing, clear contrast, and reusable classes.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Node Server</h3>
+            <p>A small dependency-free server that serves the single page and static assets.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="work" class="section work-band">
+        <div class="section-heading">
+          <p class="eyebrow">Sample work</p>
+          <h2>A simple layout for presenting real content.</h2>
+        </div>
+
+        <div class="work-list">
+          <article>
+            <span>01</span>
+            <h3>Landing page refresh</h3>
+            <p>Clear headline, direct calls to action, and a stronger first impression.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <h3>Service overview</h3>
+            <p>Scannable sections that explain what a team offers without visual clutter.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <h3>Contact workflow</h3>
+            <p>A compact form experience with immediate client-side confirmation.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="section-heading">
+          <p class="eyebrow">Contact</p>
+          <h2>Send a quick sample message.</h2>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Jane Smith" required>
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" placeholder="jane@example.com" required>
+          </label>
+          <label>
+            Message
+            <textarea name="message" rows="5" placeholder="Tell us what you want to build." required></textarea>
+          </label>
+          <button class="button primary" type="submit">Send message</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; 2026 BrightDesk Studio. Sample website for Node.js.</p>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
