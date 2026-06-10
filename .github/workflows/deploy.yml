@@ -34,5 +34,5 @@ jobs:
             cd /var/www/testapp
             git pull origin master
             npm ci
-            npm run build
+            # npm run build
             pm2 restart testapp
