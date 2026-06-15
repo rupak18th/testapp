@@ -7,4 +7,5 @@
 !/package.json
 !/package-lock.json
 !/server.js
+!/ecosystem.config.js
 
