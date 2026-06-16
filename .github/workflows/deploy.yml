@@ -1,0 +1,103 @@
+name: Deploy NodeJS Application
+
+on:
+  push:
+    branches:
+      - main
+      - uat
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # Enable when ready
+      #
+      # - name: Run Tests
+      #   run: npm test
+      #
+      # - name: Build
+      #   run: npm run build
+
+      - name: Select Deployment Target
+        shell: bash
+        run: |
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "SERVER_HOST=${{ secrets.PRODUCTION_SERVER_HOST }}" >> $GITHUB_ENV
+            echo "SERVER_USER=${{ secrets.PRODUCTION_SERVER_USER }}" >> $GITHUB_ENV
+
+            echo "APP_PATH=${{ secrets.PRODUCTION_APP_PATH }}" >> $GITHUB_ENV
+            echo "APP_BRANCH=${{ secrets.PRODUCTION_BRANCH }}" >> $GITHUB_ENV
+
+            {
+              echo "SSH_KEY<<EOF"
+              echo "${{ secrets.PRODUCTION_SERVER_SSH_KEY }}"
+              echo "EOF"
+            } >> $GITHUB_ENV
+
+          else
+            echo "SERVER_HOST=${{ secrets.STAGING_SERVER_HOST }}" >> $GITHUB_ENV
+            echo "SERVER_USER=${{ secrets.STAGING_SERVER_USER }}" >> $GITHUB_ENV
+
+            echo "APP_PATH=${{ secrets.STAGING_APP_PATH }}" >> $GITHUB_ENV
+            echo "APP_BRANCH=${{ secrets.STAGING_BRANCH }}" >> $GITHUB_ENV
+
+            {
+              echo "SSH_KEY<<EOF"
+              echo "${{ secrets.STAGING_SERVER_SSH_KEY }}"
+              echo "EOF"
+            } >> $GITHUB_ENV
+          fi
+
+      - name: Display Deployment Info
+        run: |
+          echo "Branch      : ${{ github.ref_name }}"
+          echo "Server      : $SERVER_HOST"
+          echo "Application : $APP_PATH"
+
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SSH_KEY }}
+
+          script: |
+            set -e
+
+            echo "Deploy started..."
+
+            cd $APP_PATH
+
+            git fetch origin
+
+            git reset --hard origin/$APP_BRANCH
+
+            npm ci
+
+            # npm run build
+
+            pm2 startOrRestart ecosystem.config.js
+
+            pm2 save
+
+            echo "Deployment completed."
