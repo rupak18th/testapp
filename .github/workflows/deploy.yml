@@ -88,8 +88,6 @@ jobs:
           script: |
             set -e
             echo "Deploy started..."
-            echo "APP_PATH=$APP_PATH"
-            echo "APP_BRANCH=$APP_BRANCH"
             cd $APP_PATH
             git fetch origin
             git reset --hard origin/$APP_BRANCH
