@@ -76,28 +76,25 @@ jobs:
 
       - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
+        env:
+          APP_PATH: ${{ env.APP_PATH }}
+          APP_BRANCH: ${{ env.APP_BRANCH }}
         with:
           host: ${{ env.SERVER_HOST }}
           username: ${{ env.SERVER_USER }}
           key: ${{ env.SSH_KEY }}
+          envs: APP_PATH,APP_BRANCH
 
           script: |
             set -e
-
             echo "Deploy started..."
-
+            echo "APP_PATH=$APP_PATH"
+            echo "APP_BRANCH=$APP_BRANCH"
             cd $APP_PATH
-
             git fetch origin
-
             git reset --hard origin/$APP_BRANCH
-
             npm ci
-
             # npm run build
-
             pm2 startOrRestart ecosystem.config.js
-
             pm2 save
-
             echo "Deployment completed."
